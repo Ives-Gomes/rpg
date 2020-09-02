@@ -1,0 +1,13 @@
+body {
+  margin: 0;
+  padding: 0;
+
+  display: flex;
+  justify-content: space-between;
+}
+
+#canvas {
+  margin: 6px;
+  background: #008000;
+  border: 1px solid #000;
+}
