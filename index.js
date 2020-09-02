@@ -3,12 +3,19 @@ let screen = canvas.getContext('2d');
 
 let character = new Image();
 let characterDrawed = false;
-let characterPosX = 380;
-let characterPosY = 280;
+let characterPosX = 100;
+let characterPosY = 400;
 let characterWidth = 40;
 let characterHeight = 40;
 let characterVelX = 5;
 let characterVelY = 5;
+
+let ally = new Image();
+let allyDrawed = false;
+let allyPosX = 400;
+let allyPosY = 100;
+let allyWidth = 40;
+let allyHeight = 40;
 
 let right = false;
 let left = false;
@@ -37,11 +44,17 @@ document.addEventListener('keyup', (e) => {
 
 function load() {
   character.src = 'assets/character.png';
+  ally.src = 'assets/ally.png';
+
   character.onload = () => {
     characterDrawed = true;
   };
 
-  if (characterDrawed) {
+  ally.onload = () => {
+    allyDrawed = true;
+  };
+
+  if (characterDrawed && allyDrawed) {
     loop();
   } else {
     setTimeout(load, 100);
@@ -129,6 +142,7 @@ function draw() {
   screen.clearRect(0, 0, 800, 600);
 
   screen.drawImage(character, characterPosX, characterPosY);
+  screen.drawImage(ally, allyPosX, allyPosY);
 }
 
 function loop() {
