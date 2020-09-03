@@ -136,6 +136,16 @@ function update() {
   if (characterPosY < 0) {
     characterPosY = 0;
   }
+
+  // colisão com ally
+  if (
+    characterPosX < allyPosX + allyWidth + 10 &&
+    characterPosX + characterWidth + 10 > allyPosX &&
+    characterPosY < allyPosY + allyHeight + 10 &&
+    characterPosY + characterHeight + 10 > allyPosY
+  ) {
+    console.log('Colidiu!');
+  }
 }
 
 function draw() {
