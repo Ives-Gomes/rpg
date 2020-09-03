@@ -1,6 +1,8 @@
 let canvas = document.getElementById('canvas');
 let screen = canvas.getContext('2d');
 
+let text = document.getElementById('text');
+
 let character = new Image();
 let characterDrawed = false;
 let characterPosX = 100;
@@ -25,6 +27,8 @@ let up = false;
 let down = false;
 
 let collision = false;
+
+let talk = false;
 
 document.addEventListener('keydown', (e) => {
   var kc = e.keyCode;
@@ -141,16 +145,6 @@ function update() {
     characterPosY = 0;
   }
 
-  // colisão com ally
-  // if (
-  //   characterPosX < allyPosX + allyWidth + 10 &&
-  //   characterPosX + characterWidth + 10 > allyPosX &&
-  //   characterPosY < allyPosY + allyHeight + 10 &&
-  //   characterPosY + characterHeight + 10 > allyPosY
-  // ) {
-  //   console.log('Colidiu!');
-  // }
-
   if (
     characterPosX + characterWidth < allyPosX ||
     characterPosX > allyPosX + allyWidth ||
@@ -163,28 +157,38 @@ function update() {
   }
 
   if (collision) {
+    //right
     if (characterLastPosX >= allyPosX + allyWidth) {
-      characterPosX = allyPosX + allyWidth + 1;
+      characterPosX = allyPosX + allyWidth;
     }
-    //esquerda
+    //left
     else if (characterLastPosX <= allyPosX - characterWidth) {
-      characterPosX = allyPosX - characterWidth - 1;
-    }
-    //meio
-    else {
-      //cima
-      if (characterLastPosY <= allyPosY - characterHeight + 1) {
-        characterPosY = allyPosY - characterHeight + 1;
+      characterPosX = allyPosX - characterWidth;
+    } else {
+      //uo
+      if (characterLastPosY <= allyPosY - characterHeight) {
+        characterPosY = allyPosY - characterHeight;
       }
-      //baixo
+      //down
       else {
-        characterPosY = allyPosY + allyHeight + 1;
+        characterPosY = allyPosY + allyHeight;
       }
     }
+    talk = true;
+  }
+
+  if (!collision) {
+    talk = false;
   }
 
   characterLastPosX = characterPosX;
   characterLastPosY = characterPosY;
+
+  if (talk) {
+    text.innerHTML = `<a href="#">Conversar</a>`;
+  } else {
+    text.innerHTML = '';
+  }
 }
 
 function draw() {
