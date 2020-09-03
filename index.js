@@ -5,6 +5,8 @@ let character = new Image();
 let characterDrawed = false;
 let characterPosX = 100;
 let characterPosY = 400;
+let characterLastPosX = 100;
+let characterLastPosY = 400;
 let characterWidth = 40;
 let characterHeight = 40;
 let characterVelX = 5;
@@ -21,6 +23,8 @@ let right = false;
 let left = false;
 let up = false;
 let down = false;
+
+let collision = false;
 
 document.addEventListener('keydown', (e) => {
   var kc = e.keyCode;
@@ -138,14 +142,49 @@ function update() {
   }
 
   // colisão com ally
+  // if (
+  //   characterPosX < allyPosX + allyWidth + 10 &&
+  //   characterPosX + characterWidth + 10 > allyPosX &&
+  //   characterPosY < allyPosY + allyHeight + 10 &&
+  //   characterPosY + characterHeight + 10 > allyPosY
+  // ) {
+  //   console.log('Colidiu!');
+  // }
+
   if (
-    characterPosX < allyPosX + allyWidth + 10 &&
-    characterPosX + characterWidth + 10 > allyPosX &&
-    characterPosY < allyPosY + allyHeight + 10 &&
-    characterPosY + characterHeight + 10 > allyPosY
+    characterPosX + characterWidth < allyPosX ||
+    characterPosX > allyPosX + allyWidth ||
+    characterPosY + characterHeight < allyPosY ||
+    characterPosY > allyPosY + allyHeight
   ) {
-    console.log('Colidiu!');
+    collision = false;
+  } else {
+    collision = true;
   }
+
+  if (collision) {
+    if (characterLastPosX >= allyPosX + allyWidth) {
+      characterPosX = allyPosX + allyWidth + 1;
+    }
+    //esquerda
+    else if (characterLastPosX <= allyPosX - characterWidth) {
+      characterPosX = allyPosX - characterWidth - 1;
+    }
+    //meio
+    else {
+      //cima
+      if (characterLastPosY <= allyPosY - characterHeight + 1) {
+        characterPosY = allyPosY - characterHeight + 1;
+      }
+      //baixo
+      else {
+        characterPosY = allyPosY + allyHeight + 1;
+      }
+    }
+  }
+
+  characterLastPosX = characterPosX;
+  characterLastPosY = characterPosY;
 }
 
 function draw() {
