@@ -2,11 +2,12 @@ let canvas = document.getElementById('canvas');
 let screen = canvas.getContext('2d');
 
 let text = document.getElementById('text');
+let images = document.getElementById('images');
 
 let character = new Image();
 let characterDrawed = false;
-let characterPosX = 100;
-let characterPosY = 400;
+let characterPosX = 350;
+let characterPosY = 500;
 let characterLastPosX = 100;
 let characterLastPosY = 400;
 let characterWidth = 40;
@@ -191,6 +192,12 @@ function update() {
   characterLastPosY = characterPosY;
 
   if (talk) {
+    images.innerHTML = `<img class="other"
+                          src="https://i.pinimg.com/originals/7d/0a/2e/7d0a2e9970ed0bb5761611b51f2c687f.png"
+                          alt="other"
+                        />
+                        `;
+
     text.innerHTML = `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
     tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
     exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor 
@@ -240,6 +247,7 @@ function update() {
     occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.`;
   } else {
     text.innerHTML = '';
+    images.innerHTML = '';
   }
 }
 
