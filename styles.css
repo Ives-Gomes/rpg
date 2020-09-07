@@ -1,6 +1,7 @@
 body {
   margin: 0;
   padding: 0;
+  background-color: #bbb;
 
   display: flex;
   justify-content: space-between;
@@ -8,6 +9,5 @@ body {
 
 #canvas {
   margin: 6px;
-  background: #001d8d;
-  border: 1px solid #000;
+  background: #000;
 }

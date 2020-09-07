@@ -146,39 +146,45 @@ function update() {
   }
 
   if (
-    characterPosX + characterWidth < allyPosX - 20 ||
-    characterPosX - 20 > allyPosX + allyWidth ||
-    characterPosY + characterHeight < allyPosY - 20 ||
-    characterPosY - 20 > allyPosY + allyHeight
+    characterPosX + characterWidth < allyPosX ||
+    characterPosX > allyPosX + allyWidth ||
+    characterPosY + characterHeight < allyPosY ||
+    characterPosY > allyPosY + allyHeight
   ) {
     collision = false;
   } else {
     collision = true;
   }
 
-  if (collision) {
-    //right
-    if (characterLastPosX >= allyPosX + allyWidth) {
-      characterPosX = allyPosX + allyWidth + 20;
-    }
-    //left
-    else if (characterLastPosX <= allyPosX - characterWidth) {
-      characterPosX = allyPosX - characterWidth - 20;
-    } else {
-      //up
-      if (characterLastPosY <= allyPosY - characterHeight) {
-        characterPosY = allyPosY - characterHeight - 20;
-      }
-      //down
-      else {
-        characterPosY = allyPosY + allyHeight + 20;
-      }
-    }
+  if (
+    characterPosX + characterWidth < allyPosX - 20 ||
+    characterPosX - 20 > allyPosX + allyWidth ||
+    characterPosY + characterHeight < allyPosY - 20 ||
+    characterPosY - 20 > allyPosY + allyHeight
+  ) {
+    talk = false;
+  } else {
     talk = true;
   }
 
-  if (!collision) {
-    talk = false;
+  if (collision) {
+    //right
+    if (characterLastPosX >= allyPosX + allyWidth) {
+      characterPosX = allyPosX + allyWidth;
+    }
+    //left
+    else if (characterLastPosX <= allyPosX - characterWidth) {
+      characterPosX = allyPosX - characterWidth;
+    } else {
+      //up
+      if (characterLastPosY <= allyPosY - characterHeight) {
+        characterPosY = allyPosY - characterHeight;
+      }
+      //down
+      else {
+        characterPosY = allyPosY + allyHeight;
+      }
+    }
   }
 
   characterLastPosX = characterPosX;
