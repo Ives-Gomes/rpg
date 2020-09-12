@@ -3,17 +3,19 @@ let screen = canvas.getContext('2d');
 
 let text = document.getElementById('text');
 let images = document.getElementById('images');
+let buttonDiv = document.getElementById('buttonDiv');
+
 
 let character = new Image();
 let characterDrawed = false;
-let characterPosX = 350;
-let characterPosY = 500;
+let characterPosX = 100;
+let characterPosY = 550;
 let characterLastPosX = 100;
 let characterLastPosY = 400;
 let characterWidth = 40;
 let characterHeight = 40;
-let characterVelX = 5;
-let characterVelY = 5;
+let characterVelX = 0;
+let characterVelY = 0;
 
 let ally = new Image();
 let allyDrawed = false;
@@ -28,8 +30,8 @@ let up = false;
 let down = false;
 
 let collision = false;
-
 let talk = false;
+let pause = true;
 
 document.addEventListener('keydown', (e) => {
   var kc = e.keyCode;
@@ -51,6 +53,20 @@ document.addEventListener('keyup', (e) => {
   if (kc === 40) down = false;
 });
 
+function start() {
+    text.innerHTML = `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
+    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
+    exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.`;
+
+    const button = document.createElement('button');
+    button.setAttribute('type','button');
+    button.setAttribute('id', 'button');
+    button.setAttribute('onclick', 'load()');
+    button.appendChild(document.createTextNode('Continuar...'));
+
+    buttonDiv.appendChild(button); 
+}
+
 function load() {
   character.src = 'assets/character.png';
   ally.src = 'assets/ally.png';
@@ -71,183 +87,191 @@ function load() {
 }
 
 function update() {
-  if (right) {
-    characterPosX += characterVelX;
-
-    if (characterPosX > 800 - characterWidth) {
-      characterPosX = 800 - characterWidth;
-    }
-  } else if (left) {
-    characterPosX -= characterVelX;
-
-    if (characterPosX < 0) {
-      characterPosX = 0;
-    }
-  } else if (up) {
-    characterPosY -= characterVelY;
-
-    if (characterPosY < 0) {
-      characterPosY = 0;
-    }
-  } else if (down) {
-    characterPosY += characterVelY;
-
-    if (characterPosY > 600 - characterHeight) {
-      characterPosY = 600 - characterHeight;
-    }
-  }
-
-  if (right && down) {
-    characterPosX += characterVelX / 3;
-    characterPosY += characterVelY / 3;
-
-    if (characterPosX > 800 - characterWidth) {
-      characterPosX = 800 - characterWidth;
-    }
-
-    if (characterPosY > 600 - characterHeight) {
-      characterPosY = 600 - characterHeight;
-    }
-  }
-  if (left && down) {
-    characterPosX -= characterVelX / 3;
-    characterPosY += characterVelY / 3;
-
-    if (characterPosX < 0) {
-      characterPosX = 0;
-    }
-
-    if (characterPosY > 600 - characterHeight) {
-      characterPosY = 600 - characterHeight;
-    }
-  }
-  if (right && up) {
-    characterPosX += characterVelX / 3;
-    characterPosY -= characterVelY / 3;
-
-    if (characterPosX > 800 - characterWidth) {
-      characterPosX = 800 - characterWidth;
-    }
-
-    if (characterPosY < 0) {
-      characterPosY = 0;
-    }
-  }
-  if (left && up) {
-    characterPosX -= characterVelX / 3;
-    characterPosY -= characterVelY / 3;
-  }
-
-  if (characterPosX < 0) {
-    characterPosX = 0;
-  }
-
-  if (characterPosY < 0) {
-    characterPosY = 0;
-  }
-
-  if (
-    characterPosX + characterWidth < allyPosX ||
-    characterPosX > allyPosX + allyWidth ||
-    characterPosY + characterHeight < allyPosY ||
-    characterPosY > allyPosY + allyHeight
-  ) {
-    collision = false;
-  } else {
-    collision = true;
-  }
-
-  if (
-    characterPosX + characterWidth < allyPosX - 20 ||
-    characterPosX - 20 > allyPosX + allyWidth ||
-    characterPosY + characterHeight < allyPosY - 20 ||
-    characterPosY - 20 > allyPosY + allyHeight
-  ) {
-    talk = false;
-  } else {
-    talk = true;
-  }
-
-  if (collision) {
-    //right
-    if (characterLastPosX >= allyPosX + allyWidth) {
-      characterPosX = allyPosX + allyWidth;
-    }
-    //left
-    else if (characterLastPosX <= allyPosX - characterWidth) {
-      characterPosX = allyPosX - characterWidth;
-    } else {
-      //up
-      if (characterLastPosY <= allyPosY - characterHeight) {
-        characterPosY = allyPosY - characterHeight;
-      }
-      //down
-      else {
-        characterPosY = allyPosY + allyHeight;
-      }
-    }
-  }
-
-  characterLastPosX = characterPosX;
-  characterLastPosY = characterPosY;
-
-  if (talk) {
-    images.innerHTML = `<img class="other"
-                          src="https://i.pinimg.com/originals/7d/0a/2e/7d0a2e9970ed0bb5761611b51f2c687f.png"
-                          alt="other"
-                        />
-                        `;
-
-    text.innerHTML = `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
-    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
-    exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor 
-    in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint 
-    occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
-    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
-    exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor 
-    in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint 
-    occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
-    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
-    exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor 
-    in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint 
-    occaecat cupidatat non proident, sunt in culpa dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
-    exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor 
-    in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint 
-    occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
-    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
-    exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor 
-    in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint 
-    occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
-    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
-    exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor 
-    in reprehenderit in voluptate velit esse cillum dolore eu fugiat ndolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
-    exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor 
-    in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint 
-    occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
-    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
-    exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor 
-    in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint 
-    occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
-    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
-    exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor 
-    in reprehenderit in voluptate velit esse cillum dolore eu fugiat ndolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
-    exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor 
-    in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint 
-    occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
-    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
-    exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor 
-    in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint 
-    occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
-    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
-    exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor 
-    in reprehenderit in voluptate velit esse cillum dolore eu fugiat nqui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
-    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
-    exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor 
-    in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint 
-    occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.`;
-  } else {
+  if (start) {
     text.innerHTML = '';
-    images.innerHTML = '';
+    buttonDiv.innerHTML = '';
+
+    characterVelX = 5;
+    characterVelY = 5;
+
+    if (right) {
+      characterPosX += characterVelX;
+  
+      if (characterPosX > 800 - characterWidth) {
+        characterPosX = 800 - characterWidth;
+      }
+    } else if (left) {
+      characterPosX -= characterVelX;
+  
+      if (characterPosX < 0) {
+        characterPosX = 0;
+      }
+    } else if (up) {
+      characterPosY -= characterVelY;
+  
+      if (characterPosY < 0) {
+        characterPosY = 0;
+      }
+    } else if (down) {
+      characterPosY += characterVelY;
+  
+      if (characterPosY > 600 - characterHeight) {
+        characterPosY = 600 - characterHeight;
+      }
+    }
+  
+    if (right && down) {
+      characterPosX += characterVelX / 3;
+      characterPosY += characterVelY / 3;
+  
+      if (characterPosX > 800 - characterWidth) {
+        characterPosX = 800 - characterWidth;
+      }
+  
+      if (characterPosY > 600 - characterHeight) {
+        characterPosY = 600 - characterHeight;
+      }
+    }
+    if (left && down) {
+      characterPosX -= characterVelX / 3;
+      characterPosY += characterVelY / 3;
+  
+      if (characterPosX < 0) {
+        characterPosX = 0;
+      }
+  
+      if (characterPosY > 600 - characterHeight) {
+        characterPosY = 600 - characterHeight;
+      }
+    }
+    if (right && up) {
+      characterPosX += characterVelX / 3;
+      characterPosY -= characterVelY / 3;
+  
+      if (characterPosX > 800 - characterWidth) {
+        characterPosX = 800 - characterWidth;
+      }
+  
+      if (characterPosY < 0) {
+        characterPosY = 0;
+      }
+    }
+    if (left && up) {
+      characterPosX -= characterVelX / 3;
+      characterPosY -= characterVelY / 3;
+    }
+  
+    if (characterPosX < 0) {
+      characterPosX = 0;
+    }
+  
+    if (characterPosY < 0) {
+      characterPosY = 0;
+    }
+  
+    if (
+      characterPosX + characterWidth < allyPosX ||
+      characterPosX > allyPosX + allyWidth ||
+      characterPosY + characterHeight < allyPosY ||
+      characterPosY > allyPosY + allyHeight
+    ) {
+      collision = false;
+    } else {
+      collision = true;
+    }
+  
+    if (
+      characterPosX + characterWidth < allyPosX - 20 ||
+      characterPosX - 20 > allyPosX + allyWidth ||
+      characterPosY + characterHeight < allyPosY - 20 ||
+      characterPosY - 20 > allyPosY + allyHeight
+    ) {
+      talk = false;
+    } else {
+      talk = true;
+    }
+  
+    if (collision) {
+      //right
+      if (characterLastPosX >= allyPosX + allyWidth) {
+        characterPosX = allyPosX + allyWidth;
+      }
+      //left
+      else if (characterLastPosX <= allyPosX - characterWidth) {
+        characterPosX = allyPosX - characterWidth;
+      } else {
+        //up
+        if (characterLastPosY <= allyPosY - characterHeight) {
+          characterPosY = allyPosY - characterHeight;
+        }
+        //down
+        else {
+          characterPosY = allyPosY + allyHeight;
+        }
+      }
+    }
+  
+    characterLastPosX = characterPosX;
+    characterLastPosY = characterPosY;
+  
+    if (talk) {
+      images.innerHTML = `<img class="other"
+                            src="https://i.pinimg.com/originals/7d/0a/2e/7d0a2e9970ed0bb5761611b51f2c687f.png"
+                            alt="other"
+                          />
+                          `;
+  
+      text.innerHTML = `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
+      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
+      exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor 
+      in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint 
+      occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
+      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
+      exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor 
+      in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint 
+      occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
+      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
+      exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor 
+      in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint 
+      occaecat cupidatat non proident, sunt in culpa dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
+      exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor 
+      in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint 
+      occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
+      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
+      exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor 
+      in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint 
+      occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
+      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
+      exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor 
+      in reprehenderit in voluptate velit esse cillum dolore eu fugiat ndolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
+      exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor 
+      in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint 
+      occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
+      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
+      exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor 
+      in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint 
+      occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
+      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
+      exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor 
+      in reprehenderit in voluptate velit esse cillum dolore eu fugiat ndolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
+      exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor 
+      in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint 
+      occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
+      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
+      exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor 
+      in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint 
+      occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
+      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
+      exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor 
+      in reprehenderit in voluptate velit esse cillum dolore eu fugiat nqui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
+      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
+      exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor 
+      in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint 
+      occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.`;
+    } else {
+      text.innerHTML = '';
+      images.innerHTML = '';
+    }
   }
 }
 
@@ -265,4 +289,4 @@ function loop() {
   setTimeout(loop, 33);
 }
 
-load();
+start();
