@@ -32,6 +32,8 @@ let down = false;
 let collision = false;
 let talk = false;
 let pause = true;
+let warrior = false;
+let mage = false;
 
 document.addEventListener('keydown', (e) => {
   var kc = e.keyCode;
@@ -54,20 +56,62 @@ document.addEventListener('keyup', (e) => {
 });
 
 function start() {
-    text.innerHTML = `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
-    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
-    exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.`;
+    text.innerHTML = `Olá aventureiro(a)! Meu nome é 
+    <a href="https://www.linkedin.com/in/ives-moreira-8871b318a/" target="_blank" rel="noopener">
+      Ives Moreira
+    </a> 
+    e eu serei o mestre desse RPG!
+    `;
 
     const button = document.createElement('button');
     button.setAttribute('type','button');
     button.setAttribute('id', 'button');
-    button.setAttribute('onclick', 'load()');
+    button.setAttribute('onclick', 'firstDialog()');
     button.appendChild(document.createTextNode('Continuar...'));
 
     buttonDiv.appendChild(button); 
 }
 
+function firstDialog() {
+  clearDivs();
+
+  text.innerHTML = `Escolha sua classe para começar a jogar:`
+
+  const buttonWarrior = document.createElement('button');
+  buttonWarrior.setAttribute('type','button');
+  buttonWarrior.setAttribute('id', 'button');
+  buttonWarrior.setAttribute('onclick', `selectedWarrior()`);
+  buttonWarrior.appendChild(document.createTextNode('Guerreiro'));
+
+  const buttonMage = document.createElement('button');
+  buttonMage.setAttribute('type','button');
+  buttonMage.setAttribute('id', 'button');
+  buttonMage.setAttribute('onclick', `selectedMage()`);
+  buttonMage.appendChild(document.createTextNode('Mago'));
+
+  buttonDiv.appendChild(buttonWarrior);
+  buttonDiv.appendChild(buttonMage);
+}
+
+function secondDialog() {
+  clearDivs();
+
+  text.innerHTML = `Você está num mundo onde existe apenas um único e grande continente, 
+  chamado Erten. Nele, há duas cidades-estado, separadas por uma vasta floresta onde 
+  ninguém governa...`;
+
+  const button = document.createElement('button');
+  button.setAttribute('type','button');
+  button.setAttribute('id', 'button');
+  button.setAttribute('onclick', 'load()');
+  button.appendChild(document.createTextNode('Continuar...'));
+
+  buttonDiv.appendChild(button);
+}
+
 function load() {
+  console.log(warrior, mage);
+
   character.src = 'assets/character.png';
   ally.src = 'assets/ally.png';
 
@@ -88,8 +132,7 @@ function load() {
 
 function update() {
   if (start) {
-    text.innerHTML = '';
-    buttonDiv.innerHTML = '';
+    clearDivs();
 
     characterVelX = 5;
     characterVelY = 5;
@@ -287,6 +330,21 @@ function loop() {
   draw();
 
   setTimeout(loop, 33);
+}
+
+function clearDivs() {
+  text.innerHTML = '';
+  buttonDiv.innerHTML = '';
+}
+
+function selectedWarrior() {
+  warrior = true;
+  secondDialog();
+}
+
+function selectedMage() {
+  mage = true;
+  secondDialog();
 }
 
 start();
