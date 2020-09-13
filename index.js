@@ -67,7 +67,7 @@ function start() {
     button.setAttribute('type','button');
     button.setAttribute('id', 'button');
     button.setAttribute('onclick', 'firstDialog()');
-    button.appendChild(document.createTextNode('Continuar...'));
+    button.appendChild(document.createTextNode('Começar!'));
 
     buttonDiv.appendChild(button); 
 }
@@ -98,7 +98,37 @@ function secondDialog() {
 
   text.innerHTML = `Você está num mundo onde existe apenas um único e grande continente, 
   chamado Erten. Nele, há duas cidades-estado, separadas por uma vasta floresta onde 
-  ninguém governa...`;
+  ninguém governa...
+  <br>
+  <br>
+  Tallve, a cidade-estado do sul, é governada por um conselho de cinco magos anciões elfos. 
+  É uma cidade onde há respeito e paz. A magia é algo natural nessa cidade e muitas pessoas 
+  a praticam. O conselho raramente se envolve com algo fora de Tallve. A harmonia da cidade é 
+  o foco principal do conselho.
+  <br>
+  <br>
+  Cornn, a cidade-estado do norte, é governada pelo humano tirano, chamado Harrien. Ele é conhecido por 
+  sua crueldade e muitas pessoas o temem. A cidade possui bastante comércio e você pode encontrar 
+  de tudo por lá. Por lá circulam desde criminosos, praticantes de magia proibida até andarilhos. 
+  Isso tudo porque o tirano só se importa com ele mesmo e muitos guerreiros e magos de magia proibida 
+  são seus seguidores, sendo quase impossível tirar ele do poder...
+  `;
+
+  const button = document.createElement('button');
+  button.setAttribute('type','button');
+  button.setAttribute('id', 'button');
+  button.setAttribute('onclick', 'thridDialog()');
+  button.appendChild(document.createTextNode('Continuar...'));
+
+  buttonDiv.appendChild(button);
+}
+
+function thridDialog() {
+  clearDivs();
+
+  text.innerHTML = `Você está na cidade de Tallve, mais precisamente na taverna "O Martelo 
+  Quebrado". Você está procurando por algum trabalho e, normalmente, nessas tavernas sempre tem 
+  alguém contratando...`;
 
   const button = document.createElement('button');
   button.setAttribute('type','button');

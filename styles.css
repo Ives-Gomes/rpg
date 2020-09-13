@@ -2,9 +2,27 @@ body {
   margin: 0;
   padding: 0;
   background-color: #999999;
+  font-family: Kufam, sans-serif;
+  font-size: 15px;
 
   display: flex;
   justify-content: space-between;
+}
+
+a, a:visited {
+  text-decoration: none;
+  color: #00F;
+}
+
+button {
+  padding: 5px;
+  font-family: Kufam, sans-serif;
+  margin: 10px 0;
+}
+
+#buttonDiv {
+  display: flex;
+  flex-direction: column;
 }
 
 #canvas {
@@ -62,17 +80,9 @@ body {
   justify-content: space-between;
 }
 
-.me {
-  border: 1px solid #000;
-  width: 130px;
-  height: 140px;
-  margin-bottom: 20px;
-  justify-content: space-between;
-}
-
 .other {
   border: 1px solid #000;
-  width: 130px;
+  width: 110px;
   height: 140px;
   margin-top: 20px;
 }
