@@ -109,9 +109,9 @@ function secondDialog() {
   <br>
   Cornn, a cidade-estado do norte, é governada por um humano, chamado Harrien. Ele é conhecido por 
   sua crueldade e muitas pessoas o temem. A cidade possui bastante comércio e você pode encontrar 
-  de tudo por lá. Por lá circulam desde criminosos, praticantes de magia proibida até andarilhos. 
+  de tudo. Por lá circulam desde criminosos, praticantes de magia proibida até andarilhos. 
   Isso tudo porque o tirano só se importa com ele mesmo e muitos guerreiros e magos de magia proibida 
-  são seus seguidores, sendo quase impossível tirar ele do poder.
+  são seus seguidores, sendo quase impossível tirá-lo do poder.
   <br>
   <br>
   No meio das cidades-estado, temos uma vasta e densa floresta. Ela não é muito explorada e possui 
